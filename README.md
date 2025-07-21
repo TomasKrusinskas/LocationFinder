@@ -1,64 +1,67 @@
-LocationFinder
-Match point‐locations to polygonal regions and output which locations fall into each region as JSON.
+# LocationFinder
 
-Prerequisites
-Scala CLI (for Scala 3 support and dependency management)
+**Match point‑locations to polygonal regions and output which locations fall into each region as JSON.**
 
-Git (to clone the repository)
+---
 
-Project Structure
-pgsql
-Copy
-Edit
+## Prerequisites
+
+- **Scala CLI** (for Scala 3 support and dependency management)  
+- **Git** (to clone the repository)
+
+---
+
+## Project Structure
+
 LocationFinder/
-├── build.sc               # Scala CLI build configuration
-├── src/                   # Application source files
-│   ├── GeoMatcherApp.scala
-│   ├── models/
-│   │   ├── Location.scala
-│   │   ├── Region.scala
-│   │   └── RegionMatch.scala
-│   └── utils/
-│       ├── FileUtils.scala
-│       ├── GeoUtils.scala
-│       ├── RegionMatcher.scala
-│       └── Validator.scala
-├── test/                  # Unit test suites (MUnit)
-│   ├── GeoUtilsSuite.scala
-│   └── MatcherSuite.scala
-├── input/                 # Sample input JSON files
-│   ├── regions.json
-│   └── locations.json
-├── output/                # Generated output
-│   └── results.json       # Created by the application
-└── README.md              # This file
-How to Run
-From the project root directory, execute:
+├── build.sc # Scala CLI build configuration
+├── src/ # Application source files
+│ ├── GeoMatcherApp.scala
+│ ├── models/
+│ │ ├── Location.scala
+│ │ ├── Region.scala
+│ │ └── RegionMatch.scala
+│ └── utils/
+│ ├── FileUtils.scala
+│ ├── GeoUtils.scala
+│ ├── RegionMatcher.scala
+│ └── Validator.scala
+├── test/ # Unit test suites (MUnit)
+│ ├── GeoUtilsSuite.scala
+│ └── MatcherSuite.scala
+├── input/ # Sample input JSON files
+│ ├── regions.json
+│ └── locations.json
+├── output/ # Generated output
+│ └── results.json
+└── README.md # This file
 
-bash
-Copy
-Edit
+yaml
+
+---
+
+## How to Run
+
+From the project root, run:
+
+```bash
 scala-cli run . -- \
   --regions=input/regions.json \
   --locations=input/locations.json \
   --output=output/results.json
-run . compiles and runs all sources under src/.
+run . tells Scala CLI to compile & run everything under src/.
 
-The -- separates Scala CLI options from your program arguments.
+-- separates Scala CLI flags from your app’s flags.
 
---regions: path to the regions JSON file.
+--regions: path to regions JSON
 
---locations: path to the locations JSON file.
+--locations: path to locations JSON
 
---output: destination path for the results JSON file.
+--output: where to write the results JSON
 
-After successful execution, inspect output/results.json for the matched results.
+After running, check output/results.json for your matches.
 
 Running Tests
-To execute unit tests (using MUnit), run:
-
 bash
-Copy
-Edit
 scala-cli test .
-All test suites under test/ will run and validate the geometry logic and matching algorithm.
+This runs all MUnit suites under test/.
