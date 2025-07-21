@@ -67,15 +67,15 @@ scala-cli run . -- \
   --output=output/results.json
 run . tells Scala CLI to compile & run everything under src/.
 
--- separates Scala CLI flags from your app’s flags.
+-- separates Scala CLI flags from app’s flags.
 
 --regions: path to regions JSON
 
 --locations: path to locations JSON
 
---output: where to write the results JSON
+--output: path to results JSON
 
-After running, check output/results.json for your matches.
+After running, the results will be written to results.json.
 
 Running Tests
 scala-cli test .
