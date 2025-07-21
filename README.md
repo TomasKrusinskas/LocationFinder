@@ -13,28 +13,35 @@
 
 ## Project Structure
 
-LocationFinder/
-├── build.sc            # Scala CLI build configuration
-├── src/                # Application source files
-│   ├── GeoMatcherApp.scala
-│   ├── models/
-│   │   ├── Location.scala
-│   │   ├── Region.scala
-│   │   └── RegionMatch.scala
-│   └── utils/
-│       ├── FileUtils.scala
-│       ├── GeoUtils.scala
-│       ├── RegionMatcher.scala
-│       └── Validator.scala
-├── test/               # Unit test suites (MUnit)
-│   ├── GeoUtilsSuite.scala
-│   └── MatcherSuite.scala
-├── input/              # Sample input JSON files
-│   ├── regions.json
-│   └── locations.json
-├── output/             # Generated output
-│   └── results.json
-└── README.md           # This file
+build.sc
+Scala CLI build configuration (Scala version and dependencies).
+
+src/
+– GeoMatcherApp.scala: Main application entry point.
+– models/
+  • Location.scala
+  • Region.scala
+  • RegionMatch.scala
+(case‑classes and uPickle serializers)
+– utils/
+  • FileUtils.scala (safe JSON file loading)
+  • GeoUtils.scala (point‑in‑polygon logic)
+  • RegionMatcher.scala (matching algorithm)
+  • Validator.scala (input validation)
+
+test/
+– GeoUtilsSuite.scala (unit tests for the geometry logic)
+– MatcherSuite.scala (unit tests for the matching algorithm)
+
+input/
+– regions.json (sample region polygons)
+– locations.json (sample point locations)
+
+output/
+– results.json (generated output showing which locations fall in which regions)
+
+README.md
+This file, with instructions for running and testing the app.
 
 ---
 
