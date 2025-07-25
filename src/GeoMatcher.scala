@@ -1,6 +1,8 @@
 #!/usr/bin/env scala-cli
 //> using lib "com.lihaoyi::upickle:4.1.0"
 //> using lib "com.github.scopt::scopt:4.0.1"
+//> using lib "org.slf4j:slf4j-api:1.7.36"
+//> using lib "ch.qos.logback:logback-classic:1.2.11"
 
 import upickle.default.*
 import models._
@@ -8,10 +10,13 @@ import utils._
 import java.nio.file.{Files, Paths}
 import scala.util.{Try, Failure, Success}
 import scopt.OParser
+import org.slf4j.LoggerFactory
 
 case class Config(regions: String = "", locations: String = "", output: String = "")
 
 object GeoMatcherApp:
+
+  private val logger = LoggerFactory.getLogger(getClass)
 
   private val builder = OParser.builder[Config]
   private val parser = {
@@ -48,6 +53,13 @@ object GeoMatcherApp:
   def main(args: Array[String]): Unit =
     OParser.parse(parser, args, Config()) match
       case Some(config) =>
+        logger.info(
+          "Starting GeoMatcherApp with regions={}, locations={}, output={}",
+          config.regions,
+          config.locations,
+          config.output
+        )
+
         val result = for
           regionsJson   <- FileUtils.loadJsonSafe(config.regions)
           locationsJson <- FileUtils.loadJsonSafe(config.locations)
@@ -58,10 +70,10 @@ object GeoMatcherApp:
           val results    = RegionMatcher.matchLocationsToRegions(regions, locations)
           val outputJson = write(results, indent = 2)
           Files.write(Paths.get(config.output), outputJson.getBytes)
-          println(s"Results written to ${config.output}")
+          logger.info("Results written to {}", config.output)
 
         result match
-          case Failure(ex) => Console.err.println(s"Error: ${ex.getMessage}")
+          case Failure(ex) => logger.error("Error during processing: {}", ex.getMessage)
           case Success(_)  => ()
 
       case _ =>
