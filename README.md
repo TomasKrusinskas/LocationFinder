@@ -17,10 +17,15 @@ build.sc
 Scala CLI build configuration (Scala version and dependencies).
 
 src/
-– GeoMatcherApp.scala: Main application entry point.
+
+GeoMatcherApp.scala
+
 resources/
+
 logback.xml
+
 models/
+
 
   • Location.scala
   
