@@ -60,12 +60,14 @@ object GeoMatcherApp:
           config.output
         )
 
-        val result = for
+        val result: Try[Unit] = for
           regionsJson   <- FileUtils.loadJsonSafe(config.regions)
           locationsJson <- FileUtils.loadJsonSafe(config.locations)
           regions       <- Try(read[List[Region]](regionsJson))
           locations     <- Try(read[List[Location]](locationsJson))
-          _             <- Validator.validateData(regions, locations)
+          _             <- Validator.validateData(regions, locations) match
+                             case Right(_)   => Success(())
+                             case Left(errs) => Failure(new Exception(errs.mkString("; ")))
         yield
           val results    = RegionMatcher.matchLocationsToRegions(regions, locations)
           val outputJson = write(results, indent = 2)
