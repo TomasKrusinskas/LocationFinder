@@ -8,8 +8,10 @@ object GeoUtils:
     for i <- polygon.indices do
       val (xi, yi) = polygon(i)
       val (xj, yj) = polygon(j)
-      val intersect = (yi > y) != (yj > y) &&
-        x < (xj - xi) * (y - yi) / (yj - yi + 1e-10) + xi
+      val denom = yj - yi
+      val intersect =
+        (yi > y) != (yj > y) &&
+        (denom != 0) && (x < (xj - xi) * (y - yi) / denom + xi)
       if intersect then inside = !inside
       j = i
     inside

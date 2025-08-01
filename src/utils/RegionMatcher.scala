@@ -18,14 +18,16 @@ object RegionMatcher:
           gf.createPolygon(coords)
         }
 
-      val matched: List[String] =
-        locations
-          .filter { loc =>
-            val jtsPt: JtsPoint =
-              gf.createPoint(new Coordinate(loc.point.lon, loc.point.lat))
-            jtsPolygons.exists(_.contains(jtsPt))
-          }
-          .map(_.name)
+    val matched: List[String] =
+      locations
+        .filter { loc =>
+          val jtsPt: JtsPoint =
+            gf.createPoint(new Coordinate(loc.point.lon, loc.point.lat))
+          jtsPolygons.exists(poly =>
+            poly.contains(jtsPt) || poly.touches(jtsPt)
+          )
+        }
+        .map(_.name)
 
       RegionMatch(region.name, matched)
     }

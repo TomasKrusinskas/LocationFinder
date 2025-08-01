@@ -1,9 +1,12 @@
 package models
 
-import upickle.default.*
+import upickle.default.{ReadWriter, macroRW}
 import upickle.implicits.key
 
-case class RegionMatch(region: String, matched_locations: List[String])
-object RegionMatch:
+case class RegionMatch(
+  region: String,
+  @key("matched_locations") matchedLocations: List[String]
+)
+object RegionMatch {
   implicit val rw: ReadWriter[RegionMatch] = macroRW
-
+}
