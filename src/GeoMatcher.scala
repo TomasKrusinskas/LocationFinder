@@ -82,9 +82,9 @@ object GeoMatcherApp:
         val json = write(results, indent = 2)
         if (config.output.nonEmpty) {
           Files.write(Paths.get(config.output), json.getBytes)
-          println(s"Demo results written to ${config.output}")
+          logger.info("Demo results written to {}", config.output)
         } else {
-          println(json)
+          logger.info("Demo results:\n{}", json)
         }
 
       case Some(config) =>
@@ -107,9 +107,9 @@ object GeoMatcherApp:
           val outputJson = write(results, indent = 2)
           if (config.output.nonEmpty) {
             Files.write(Paths.get(config.output), outputJson.getBytes)
-            logger.info(s"Results written to ${config.output}")
+            logger.info("Results written to {}", config.output)
           } else {
-            println(outputJson)
+            logger.info("Processing results:\n{}", outputJson)
           }
         }
 
@@ -118,4 +118,3 @@ object GeoMatcherApp:
           case Right(_)  => ()
 
       case _ => ()
-
