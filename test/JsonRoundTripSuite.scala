@@ -121,8 +121,8 @@ class JsonParsingEdgeCasesSuite extends FunSuite:
   }
 
   test("RegionMatch serialization preserves snake_case key") {
-    val match = RegionMatch("TestRegion", List("Loc1", "Loc2"))
-    val json = write(match)
+    val matchResult = RegionMatch("TestRegion", List("Loc1", "Loc2"))
+    val json = write(matchResult)
     assert(json.contains("matched_locations"))
     assert(!json.contains("matchedLocations"))
   }

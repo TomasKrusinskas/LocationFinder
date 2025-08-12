@@ -10,7 +10,11 @@ object Point:
       p => ujson.Arr(p.lon, p.lat),
       json =>
         val arr = json.arr
-        Point(arr(0).num, arr(1).num)
+        if arr.length < 2 then
+          throw new IllegalArgumentException("Point array must have at least 2 elements")
+        arr.toList.map(_.value) match
+          case null :: _ => throw new IllegalArgumentException("Point coordinates cannot be null")
+          case _ => Point(arr(0).num, arr(1).num)
     )
 
 case class Polygon(vertices: List[Point])
@@ -23,6 +27,8 @@ object Polygon:
       json =>
         val verts = json.arr.toList.map { coordJson =>
           val arr = coordJson.arr
+          if arr.length < 2 then
+            throw new IllegalArgumentException("Coordinate array must have at least 2 elements")
           Point(arr(0).num, arr(1).num)
         }
         Polygon(verts)
